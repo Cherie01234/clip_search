@@ -7,8 +7,10 @@ from typing import Union
 class CLIPEncoder:
     def __init__(
         self,
-        model_name: str = "ViT-B-32",
-        pretrained: str = "openai",
+        # 多言語CLIP（XLM-RoBERTa テキストタワー）。日本語クエリでも高精度。
+        # 画像タワーは ViT-B-32、埋め込みは 512次元。
+        model_name: str = "xlm-roberta-base-ViT-B-32",
+        pretrained: str = "laion5b_s13b_b90k",
         device: str = None,
     ):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")

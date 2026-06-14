@@ -11,7 +11,7 @@ from indexer import FAISSIndexer
 INDEX_DIR = "index"
 TOP_K = 12
 
-st.set_page_config(page_title="Visual Search", page_icon="🔍", layout="wide")
+st.set_page_config(page_title="ビジュアル類似性検索", page_icon="🔍", layout="wide")
 
 
 @st.cache_resource  # モデル・インデックスは初回のみロード
@@ -24,7 +24,7 @@ def load_resources():
 
 encoder, indexer = load_resources()
 
-st.title("🔍 Visual Similarity Search")
+st.title("🔍 ビジュアル類似性検索")
 st.caption(f"CLIP × FAISS — {indexer.total:,} 枚のインデックス")
 
 # 検索モード
