@@ -38,7 +38,7 @@ if mode == "画像から検索":
         query_image = Image.open(io.BytesIO(uploaded.read())).convert("RGB")
         col_preview, _ = st.columns([1, 3])
         with col_preview:
-            st.image(query_image, caption="クエリ画像", use_container_width=True)
+            st.image(query_image, caption="クエリ画像", use_column_width=True)
         query_vector = encoder.encode_images(query_image)
 
 else:
@@ -62,7 +62,7 @@ if query_vector is not None:
         with cols[i % 4]:
             try:
                 img = Image.open(result["abs_path"])
-                st.image(img, use_container_width=True)
+                st.image(img, use_column_width=True)
                 score_pct = result["score"] * 100
                 # スコアに応じてバーを色分け
                 bar_color = "#1D9E75" if score_pct > 70 else "#EF9F27" if score_pct > 50 else "#888780"
