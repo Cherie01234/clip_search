@@ -1,5 +1,7 @@
 # 🔍 ビジュアル類似性検索（Visual Similarity Search）
 
+[![CI](https://github.com/Cherie01234/clip_search/actions/workflows/ci.yml/badge.svg)](https://github.com/Cherie01234/clip_search/actions/workflows/ci.yml)
+
 多言語 CLIP × FAISS によるテキスト・画像検索アプリ。
 キーワード（**日本語・英語**）や手持ちの画像から、画像コレクションの中で意味的に近いものを検索できます。
 
@@ -35,6 +37,18 @@ python -m venv .venv
 .venv\Scripts\activate          # Windows
 pip install -r requirements.txt
 ```
+
+## ⚡ クイックお試し（サンプル画像同梱）
+
+画像を用意しなくても、同梱のサンプル（簡単なアイコン10枚）ですぐ動作確認できます:
+
+```bash
+python make_sample_images.py                                  # sample_images/ を生成
+python build_index.py --image-dir sample_images --index-dir index
+streamlit run app.py                                          # 「星」「house」「魚」などで検索
+```
+
+> サンプルは動作確認用の簡易アイコンです。本来の意味検索の威力は実写真コレクションで発揮されます。
 
 ## 使い方
 
