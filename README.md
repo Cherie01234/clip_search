@@ -2,6 +2,18 @@
 
 [![CI](https://github.com/Cherie01234/clip_search/actions/workflows/ci.yml/badge.svg)](https://github.com/Cherie01234/clip_search/actions/workflows/ci.yml)
 
+## 概要
+
+| 項目 | 内容 |
+|---|---|
+| 解く課題 | タグや説明文のない大量の画像から、キーワード（日本語・英語）や手持ちの画像に意味が近いものを探す |
+| 手法 | 多言語CLIP（open-clip-torch の `xlm-roberta-base-ViT-B-32`）で画像とテキストを同じ512次元のベクトル空間に埋め込み、L2正規化したベクトルを FAISS（内積＝コサイン類似度）で近傍検索。Streamlitで検索画面を提供 |
+| 評価 | 約4.4万枚（44,441枚）の画像でインデックスを構築して検索（下記デモ）。検索精度の定量評価（正解ラベルを使った Recall@K など）は未実施。テストはFAISSによる近傍の順位付けと、インデックスの保存・読み込みを対象に整備（pytest） |
+| 使い方 | 同梱のサンプル画像で試す場合：`python make_sample_images.py` → `python build_index.py --image-dir sample_images --index-dir index` → `streamlit run app.py` |
+| 開発 | 設計から個人で開発（開発にはAIエージェントを活用）。pytest と GitHub Actions の CI を整備 |
+
+---
+
 多言語 CLIP × FAISS によるテキスト・画像検索アプリ。
 キーワード（**日本語・英語**）や手持ちの画像から、画像コレクションの中で意味的に近いものを検索できます。
 
