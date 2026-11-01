@@ -8,7 +8,7 @@
 |---|---|
 | 解く課題 | タグや説明文のない大量の画像から、キーワード（日本語・英語）や手持ちの画像に意味が近いものを探す |
 | 手法 | 多言語CLIP（open-clip-torch の `xlm-roberta-base-ViT-B-32`）で画像とテキストを同じ512次元のベクトル空間に埋め込み、L2正規化したベクトルを FAISS（内積＝コサイン類似度）で近傍検索。Streamlitで検索画面を提供 |
-| 評価 | 約4.4万枚（44,441枚）の画像でインデックスを構築して検索（下記デモ）。検索精度の定量評価（正解ラベルを使った Recall@K など）は未実施。テストはFAISSによる近傍の順位付けと、インデックスの保存・読み込みを対象に整備（pytest） |
+| 評価 | Kaggle の「Fashion Product Images (Small)」の商品画像 約4.4万枚（44,441枚）でインデックスを構築して検索（下記デモ・「データ」）。検索精度の定量評価（正解ラベルを使った Recall@K など）は未実施。テストはFAISSによる近傍の順位付けと、インデックスの保存・読み込みを対象に整備（pytest） |
 | 使い方 | 同梱のサンプル画像で試す場合：`python make_sample_images.py` → `python build_index.py --image-dir sample_images --index-dir index` → `streamlit run app.py` |
 | 開発 | 設計から個人で開発（開発にはAIエージェントを活用）。pytest と GitHub Actions の CI を整備 |
 
@@ -21,7 +21,7 @@ CLIP は画像とテキストを同じベクトル空間に埋め込むため、
 
 ## デモ
 
-「red dress」「running shoes」のようにキーワードを入力すると、約4.4万枚の中から似た画像を即座に提示します。
+「赤いドレス」「running shoes」のようにキーワードを入力すると、約4.4万枚の中から似た画像を即座に提示します。
 
 ![デモ](docs/demo.gif)
 
@@ -39,8 +39,11 @@ CLIP は画像とテキストを同じベクトル空間に埋め込むため、
 | `build_index.py` | 画像フォルダからインデックスを構築するスクリプト |
 | `app_start.bat` | Windows 用のワンクリック起動バッチ |
 
-> 注: 画像データ (`data/`) と生成済みインデックス (`index/`) はリポジトリに含めていません。
-> 各自で画像を用意し、`build_index.py` でインデックスを構築してください。
+## データ
+
+デモ（上の GIF を含む）で検索対象にしている画像は、Kaggle で公開されている [Fashion Product Images (Small)](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-small)（作成者: Param Aggarwal、Kaggle 上のライセンス表示: MIT）の商品画像 44,441 枚（主に 60×80px）です。元の商品画像の権利は、各権利者に帰属します。
+
+画像データ（`data/`）と生成済みインデックス（`index/`）は、リポジトリに含めていません。同じデモを再現する場合は、Kaggle からデータセットを取得して `images/` フォルダの中身を `data/images/` に置き、下記「使い方」の手順でインデックスを構築してください。手持ちの画像フォルダでも同じ手順で動きます。
 
 ## セットアップ
 
@@ -91,4 +94,5 @@ Windows では `app_start.bat` をダブルクリックでも起動できます�
 
 ## ライセンス
 
-MIT
+- コード: MIT（[LICENSE](LICENSE)）
+- 画像: Kaggle の画像データ（`data/`）はリポジトリに含めていません。`sample_images/` は `make_sample_images.py` で描いた簡易アイコンです。`docs/demo.gif` には上記データセットの商品画像の一部が写っており、出典とライセンス表示は「データ」の節のとおりです（リポジトリの LICENSE の対象外）
